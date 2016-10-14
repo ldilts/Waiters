@@ -29,6 +29,8 @@ class WaiterDetailTableViewController: UITableViewController {
     var coreDataStack: CoreDataStack!
     var waiter: Waiter!
     
+    var sortedShifts: [Shift] = [Shift]()
+    
     var cellTypesForDisplay: [WaiterDetailCellType] = [WaiterDetailCellType]()
     
     // MARK: - Life cycle
@@ -46,6 +48,17 @@ class WaiterDetailTableViewController: UITableViewController {
         
         self.tableView.estimatedRowHeight = 110.0
         self.tableView.rowHeight = UITableViewAutomaticDimension
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if let uWaiter = self.waiter {
+            
+            self.sortedShifts = uWaiter.shifts.sorted( by: { ($0 as! Shift).startTime.compare(($1 as! Shift).startTime as Date) == .orderedAscending } ) as! [Shift]
+        }
+        
+        self.tableView.reloadData()
     }
 
     override func didReceiveMemoryWarning() {
@@ -97,8 +110,21 @@ class WaiterDetailTableViewController: UITableViewController {
                     
                 }
                 
-            } else {
+            } else if indexPath.section == 1 {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
                 
+                let shift: Shift = self.sortedShifts[indexPath.row]
+                
+                let formatter = DateFormatter()
+                formatter.dateStyle = DateFormatter.Style.long
+                formatter.timeStyle = DateFormatter.Style.short
+                
+                let startTimeString = formatter.string(from: shift.startTime as Date)
+                let endTimeString = formatter.string(from: shift.endTime as Date)
+                
+                cell.textLabel?.text = "\(startTimeString) - \(endTimeString)"
+                
+                return cell
             }
         }
         
@@ -166,6 +192,12 @@ class WaiterDetailTableViewController: UITableViewController {
         return nil
     }
     
+    // MARK: - Actions
+    
+    @IBAction func addButtonTapped(_ sender: UIBarButtonItem) {
+        self.performSegue(withIdentifier: "addShiftSegue", sender: self)
+    }
+    
     // MARK: - Helper methods
     
     private func calculateNumberOfRows() -> Int {
@@ -195,14 +227,29 @@ class WaiterDetailTableViewController: UITableViewController {
         return numberOfRows
     }
 
-    /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        if let identifier = segue.identifier {
+            
+            switch identifier {
+            case "addShiftSegue":
+                
+                if let destinationViewController = segue.destination as? AddShiftTableViewController {
+                    destinationViewController.coreDataStack = self.coreDataStack
+                    destinationViewController.waiter = self.waiter
+                }
+                
+                break
+            default: break
+            }
+            
+        }
     }
-    */
+    
+    @IBAction func unwindToWaiterDetailTableViewController(segue: UIStoryboardSegue) {
+        // This is used in the storyboard file for unwind segues.
+    }
 
 }

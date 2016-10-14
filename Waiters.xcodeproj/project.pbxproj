@@ -22,6 +22,7 @@
 		86B5EB3E1DB040190014D191 /* Shift+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B5EB3A1DB040190014D191 /* Shift+CoreDataProperties.swift */; };
 		86CC656D1DB103E2003D7D69 /* WaiterDetailActionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86CC656C1DB103E2003D7D69 /* WaiterDetailActionTableViewCell.swift */; };
 		86CC656F1DB10404003D7D69 /* WaiterDetailNameTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86CC656E1DB10404003D7D69 /* WaiterDetailNameTableViewCell.swift */; };
+		86CC65711DB10A83003D7D69 /* AddShiftTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86CC65701DB10A83003D7D69 /* AddShiftTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +43,7 @@
 		86B5EB3A1DB040190014D191 /* Shift+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Shift+CoreDataProperties.swift"; path = "Model/Shift+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		86CC656C1DB103E2003D7D69 /* WaiterDetailActionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WaiterDetailActionTableViewCell.swift; path = Controller/WaiterDetailActionTableViewCell.swift; sourceTree = "<group>"; };
 		86CC656E1DB10404003D7D69 /* WaiterDetailNameTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WaiterDetailNameTableViewCell.swift; path = Controller/WaiterDetailNameTableViewCell.swift; sourceTree = "<group>"; };
+		86CC65701DB10A83003D7D69 /* AddShiftTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AddShiftTableViewController.swift; path = Controller/AddShiftTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +108,7 @@
 				86B5EB321DB034E80014D191 /* WaitersTableViewController.swift */,
 				868B74F71DB0501D00A24EED /* WaiterDetailTableViewController.swift */,
 				868B74F91DB0530C00A24EED /* AddWaiterTableViewController.swift */,
+				86CC65701DB10A83003D7D69 /* AddShiftTableViewController.swift */,
 				86CC656B1DB103AB003D7D69 /* Cells */,
 			);
 			name = Controller;
@@ -215,6 +218,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				86CC65711DB10A83003D7D69 /* AddShiftTableViewController.swift in Sources */,
 				86B5EB331DB034E80014D191 /* WaitersTableViewController.swift in Sources */,
 				86B5EB3B1DB040190014D191 /* Waiter.swift in Sources */,
 				86B5EB3E1DB040190014D191 /* Shift+CoreDataProperties.swift in Sources */,

@@ -17,7 +17,7 @@ class AddWaiterTableViewController: UITableViewController, UITextFieldDelegate {
     @IBOutlet weak var phoneTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
     
-    @IBOutlet weak var brthdayLabel: UILabel!
+    @IBOutlet weak var birthdayLabel: UILabel!
     @IBOutlet weak var birthdayDatePicker: UIDatePicker!
     
     private let birthdayCellHeightOpen: CGFloat = 260.0
@@ -154,14 +154,14 @@ class AddWaiterTableViewController: UITableViewController, UITextFieldDelegate {
     
     @IBAction func birthdayDatePickerValueChanged(_ sender: UIDatePicker) {
         
-        self.brthdayLabel.textColor = UIColor.black
+        self.birthdayLabel.textColor = UIColor.black
         
         let formatter = DateFormatter()
         formatter.dateStyle = DateFormatter.Style.long
         
         let dateString = formatter.string(from: sender.date)
         
-        self.brthdayLabel.text = dateString
+        self.birthdayLabel.text = dateString
         self.selectedBirthday = sender.date
         
     }
@@ -227,7 +227,7 @@ class AddWaiterTableViewController: UITableViewController, UITextFieldDelegate {
         self.tableView.beginUpdates()
         
         // hide datepicker?
-        self.birthdayDatePicker.isHidden = self.isBirthdayCellExpanded ? false : true
+        self.birthdayDatePicker.isHidden = !self.isBirthdayCellExpanded
         
         self.tableView.endUpdates()
     }
