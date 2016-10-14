@@ -18,6 +18,8 @@ extension Waiter {
     @NSManaged public var name: String
     @NSManaged public var birthday: NSDate?
     @NSManaged public var shifts: NSSet
+    @NSManaged public var phone: String?
+    @NSManaged public var email: String?
 
 }
 

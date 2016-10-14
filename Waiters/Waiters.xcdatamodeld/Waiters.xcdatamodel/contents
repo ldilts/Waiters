@@ -7,11 +7,13 @@
     </entity>
     <entity name="Waiter" representedClassName=".Waiter" syncable="YES">
         <attribute name="birthday" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" attributeType="String" syncable="YES"/>
+        <attribute name="phone" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="shifts" toMany="YES" deletionRule="Cascade" destinationEntity="Shift" inverseName="owner" inverseEntity="Shift" syncable="YES"/>
     </entity>
     <elements>
         <element name="Shift" positionX="-54" positionY="0" width="128" height="90"/>
-        <element name="Waiter" positionX="-63" positionY="-18" width="128" height="90"/>
+        <element name="Waiter" positionX="-63" positionY="-18" width="128" height="120"/>
     </elements>
 </model>
