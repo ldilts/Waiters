@@ -1,4 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1" systemVersion="11A491" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <elements/>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="11232" systemVersion="16A323" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Shift" representedClassName=".Shift" syncable="YES">
+        <attribute name="endTime" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="startTime" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <relationship name="owner" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Waiter" inverseName="shifts" inverseEntity="Waiter" syncable="YES"/>
+    </entity>
+    <entity name="Waiter" representedClassName=".Waiter" syncable="YES">
+        <attribute name="birthday" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="name" attributeType="String" syncable="YES"/>
+        <relationship name="shifts" toMany="YES" deletionRule="Nullify" destinationEntity="Shift" inverseName="owner" inverseEntity="Shift" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Shift" positionX="-54" positionY="0" width="128" height="90"/>
+        <element name="Waiter" positionX="-63" positionY="-18" width="128" height="90"/>
+    </elements>
 </model>

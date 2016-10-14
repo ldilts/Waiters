@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		868B74F81DB0501D00A24EED /* WaiterDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 868B74F71DB0501D00A24EED /* WaiterDetailTableViewController.swift */; };
+		868B74FA1DB0530C00A24EED /* AddWaiterTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 868B74F91DB0530C00A24EED /* AddWaiterTableViewController.swift */; };
+		868B750A1DB068D800A24EED /* Waiter+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 868B75061DB068D800A24EED /* Waiter+CoreDataProperties.swift */; };
 		86B5EB1A1DB034110014D191 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B5EB191DB034110014D191 /* AppDelegate.swift */; };
 		86B5EB1F1DB034110014D191 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 86B5EB1D1DB034110014D191 /* Main.storyboard */; };
 		86B5EB221DB034110014D191 /* Waiters.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 86B5EB201DB034110014D191 /* Waiters.xcdatamodeld */; };
@@ -14,9 +17,15 @@
 		86B5EB271DB034110014D191 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 86B5EB251DB034110014D191 /* LaunchScreen.storyboard */; };
 		86B5EB331DB034E80014D191 /* WaitersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B5EB321DB034E80014D191 /* WaitersTableViewController.swift */; };
 		86B5EB361DB035930014D191 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B5EB351DB035930014D191 /* CoreDataStack.swift */; };
+		86B5EB3B1DB040190014D191 /* Waiter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B5EB371DB040190014D191 /* Waiter.swift */; };
+		86B5EB3D1DB040190014D191 /* Shift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B5EB391DB040190014D191 /* Shift.swift */; };
+		86B5EB3E1DB040190014D191 /* Shift+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B5EB3A1DB040190014D191 /* Shift+CoreDataProperties.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		868B74F71DB0501D00A24EED /* WaiterDetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WaiterDetailTableViewController.swift; path = Controller/WaiterDetailTableViewController.swift; sourceTree = "<group>"; };
+		868B74F91DB0530C00A24EED /* AddWaiterTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AddWaiterTableViewController.swift; path = Controller/AddWaiterTableViewController.swift; sourceTree = "<group>"; };
+		868B75061DB068D800A24EED /* Waiter+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Waiter+CoreDataProperties.swift"; path = "Model/Waiter+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		86B5EB161DB034110014D191 /* Waiters.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Waiters.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		86B5EB191DB034110014D191 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		86B5EB1E1DB034110014D191 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -26,6 +35,9 @@
 		86B5EB281DB034110014D191 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		86B5EB321DB034E80014D191 /* WaitersTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WaitersTableViewController.swift; path = Controller/WaitersTableViewController.swift; sourceTree = "<group>"; };
 		86B5EB351DB035930014D191 /* CoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CoreDataStack.swift; path = Model/CoreDataStack.swift; sourceTree = "<group>"; };
+		86B5EB371DB040190014D191 /* Waiter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Waiter.swift; path = Model/Waiter.swift; sourceTree = "<group>"; };
+		86B5EB391DB040190014D191 /* Shift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Shift.swift; path = Model/Shift.swift; sourceTree = "<group>"; };
+		86B5EB3A1DB040190014D191 /* Shift+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Shift+CoreDataProperties.swift"; path = "Model/Shift+CoreDataProperties.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +81,8 @@
 		86B5EB2E1DB0342F0014D191 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				86B5EB391DB040190014D191 /* Shift.swift */,
+				86B5EB371DB040190014D191 /* Waiter.swift */,
 				86B5EB341DB0357E0014D191 /* Core Data */,
 			);
 			name = Model;
@@ -86,6 +100,8 @@
 			isa = PBXGroup;
 			children = (
 				86B5EB321DB034E80014D191 /* WaitersTableViewController.swift */,
+				868B74F71DB0501D00A24EED /* WaiterDetailTableViewController.swift */,
+				868B74F91DB0530C00A24EED /* AddWaiterTableViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -104,6 +120,8 @@
 		86B5EB341DB0357E0014D191 /* Core Data */ = {
 			isa = PBXGroup;
 			children = (
+				868B75061DB068D800A24EED /* Waiter+CoreDataProperties.swift */,
+				86B5EB3A1DB040190014D191 /* Shift+CoreDataProperties.swift */,
 				86B5EB201DB034110014D191 /* Waiters.xcdatamodeld */,
 				86B5EB351DB035930014D191 /* CoreDataStack.swift */,
 			);
@@ -184,9 +202,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				86B5EB331DB034E80014D191 /* WaitersTableViewController.swift in Sources */,
+				86B5EB3B1DB040190014D191 /* Waiter.swift in Sources */,
+				86B5EB3E1DB040190014D191 /* Shift+CoreDataProperties.swift in Sources */,
 				86B5EB221DB034110014D191 /* Waiters.xcdatamodeld in Sources */,
+				868B74F81DB0501D00A24EED /* WaiterDetailTableViewController.swift in Sources */,
 				86B5EB1A1DB034110014D191 /* AppDelegate.swift in Sources */,
 				86B5EB361DB035930014D191 /* CoreDataStack.swift in Sources */,
+				86B5EB3D1DB040190014D191 /* Shift.swift in Sources */,
+				868B74FA1DB0530C00A24EED /* AddWaiterTableViewController.swift in Sources */,
+				868B750A1DB068D800A24EED /* Waiter+CoreDataProperties.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
