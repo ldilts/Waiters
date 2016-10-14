@@ -16,7 +16,7 @@ extension Waiter {
     }
 
     @NSManaged public var name: String
-    @NSManaged public var birthday: NSDate
+    @NSManaged public var birthday: NSDate?
     @NSManaged public var shifts: NSSet
 
 }

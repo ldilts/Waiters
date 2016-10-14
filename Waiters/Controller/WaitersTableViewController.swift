@@ -9,12 +9,14 @@
 import UIKit
 import CoreData
 
-class WaitersTableViewController: UITableViewController {
+class WaitersTableViewController: UITableViewController, UISearchBarDelegate {
     
     var coreDataStack: CoreDataStack!
     var fetchedResultsController: NSFetchedResultsController<Waiter>!
     
     private var selectedIndexPath: IndexPath?
+    
+    fileprivate var resultSearchController = UISearchController()
     
     // MARK: - Lifecycle
 
@@ -27,6 +29,8 @@ class WaitersTableViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
          self.navigationItem.leftBarButtonItem = self.editButtonItem
         
+        // Setup Fetched Results Controller
+        
         let fetchRequest: NSFetchRequest<Waiter> = Waiter.fetchRequest()
         fetchRequest.sortDescriptors = [
             NSSortDescriptor(key: "name", ascending: true)
@@ -37,6 +41,18 @@ class WaitersTableViewController: UITableViewController {
             managedObjectContext: coreDataStack.managedObjectContext,
             sectionNameKeyPath: "firstLetterOfFirstName",
             cacheName: nil)
+        
+        // Setup search UI
+        
+        self.resultSearchController = UISearchController(searchResultsController: nil)
+        self.resultSearchController.searchResultsUpdater = self
+        self.resultSearchController.dimsBackgroundDuringPresentation = false
+        definesPresentationContext = true // The search bar should only stay in this view
+        self.resultSearchController.searchBar.sizeToFit()
+        self.resultSearchController.searchBar.delegate = self
+        self.resultSearchController.searchBar.tintColor = UIColor(red: (255.0/255.0), green: (45.0/255.0), blue: (85.0/255.0), alpha: 1.0)
+        
+        self.tableView.tableHeaderView = self.resultSearchController.searchBar
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -125,7 +141,7 @@ class WaitersTableViewController: UITableViewController {
     
     // MARK: - Helper methods
     
-    private func reloadData(predicate: NSPredicate? = nil) {
+    fileprivate func reloadData(predicate: NSPredicate? = nil) {
         fetchedResultsController.fetchRequest.predicate = predicate
         
         do {
@@ -170,3 +186,23 @@ class WaitersTableViewController: UITableViewController {
     }
 
 }
+
+// MARK: - Search results updating
+
+extension WaitersTableViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        
+        if self.resultSearchController.isActive
+            && self.resultSearchController.searchBar.text != "" {
+
+            // Name case-insensitively contains the search query
+            let predicate = NSPredicate(format: "name CONTAINS[c] %@",
+                                        resultSearchController.searchBar.text!)
+            
+            reloadData(predicate: predicate)
+        } else {
+            reloadData()
+        }
+    }
+}
+
