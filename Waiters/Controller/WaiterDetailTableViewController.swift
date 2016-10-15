@@ -113,18 +113,12 @@ class WaiterDetailTableViewController: UITableViewController {
                 }
                 
             } else if indexPath.section == 1 {
-                let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+                let cell = tableView.dequeueReusableCell(withIdentifier: "shiftTableViewCell",
+                                                         for: indexPath) as! ShiftTableViewCell
                 
                 let shift: Shift = self.sortedShifts[indexPath.row]
                 
-                let formatter = DateFormatter()
-                formatter.dateStyle = DateFormatter.Style.long
-                formatter.timeStyle = DateFormatter.Style.short
-                
-                let startTimeString = formatter.string(from: shift.startTime as Date)
-                let endTimeString = formatter.string(from: shift.endTime as Date)
-                
-                cell.textLabel?.text = "\(startTimeString) - \(endTimeString)"
+                cell.shift = shift
                 
                 return cell
             }

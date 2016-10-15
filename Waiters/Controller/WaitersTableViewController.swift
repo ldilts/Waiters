@@ -29,6 +29,9 @@ class WaitersTableViewController: UITableViewController, UISearchBarDelegate {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
          self.navigationItem.leftBarButtonItem = self.editButtonItem
         
+        let nib = UINib(nibName: "TableSectionHeaderView", bundle: nil)
+        tableView.register(nib, forHeaderFooterViewReuseIdentifier: "tableSectionHeaderView")
+        
         // Setup Fetched Results Controller
         
         let fetchRequest: NSFetchRequest<Waiter> = Waiter.fetchRequest()
@@ -76,9 +79,9 @@ class WaitersTableViewController: UITableViewController, UISearchBarDelegate {
         return fetchedResultsController.sections?[section].numberOfObjects ?? 0
     }
     
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return fetchedResultsController.sections?[section].name ?? ""
-    }
+//    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+//        return fetchedResultsController.sections?[section].name ?? ""
+//    }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "waiterCell", for: indexPath) as! WaiterTableViewCell
@@ -132,9 +135,25 @@ class WaitersTableViewController: UITableViewController, UISearchBarDelegate {
         return 86.0
     }
     
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 40.0
+    }
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.selectedIndexPath = indexPath
         self.performSegue(withIdentifier: "waiterDetailSegue", sender: self)
+    }
+    
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let currSection = fetchedResultsController.sections?[section]
+        let title = currSection?.name ?? ""
+        
+        // Dequeue with the reuse identifier
+        let cell = self.tableView.dequeueReusableHeaderFooterView(withIdentifier: "tableSectionHeaderView")
+        let header = cell as! TableSectionHeaderView
+        header.titleLabel.text = title
+        
+        return cell
     }
     
     // MARK: - Actions
@@ -154,8 +173,23 @@ class WaitersTableViewController: UITableViewController, UISearchBarDelegate {
             fatalError("There was an error fetching the list of waiters")
         }
         
+//        self.fetchAllShifts()
+        
         tableView.reloadData()
     }
+    
+    // Just checking if the cascading delete is working :)
+//    private func fetchAllShifts() {
+//        let fetchRequest: NSFetchRequest<Shift> = Shift.fetchRequest()
+//        
+//        do {
+//            let results = try coreDataStack.managedObjectContext.fetch(fetchRequest)
+//            NSLog("\n\(results.count) shifts found.\n")
+//            
+//        } catch {
+//            
+//        }
+//    }
 
     // MARK: - Navigation
 
