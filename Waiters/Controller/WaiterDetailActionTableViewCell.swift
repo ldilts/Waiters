@@ -34,6 +34,25 @@ class WaiterDetailActionTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    // MARK: - Actions
+    
+    @IBAction func actionButtonTapped(_ sender: UIButton) {
+        if let uWaiter = waiter {
+            if let cellType = self.actionType {
+                switch cellType {
+                case .phone:
+                    let phone = "tel://\(uWaiter.phone!)"
+                    UIApplication.shared.open(URL(string: phone)!, options: [:], completionHandler: nil)
+                    break
+                case .email:
+//                    UIApplication.shared.open(uBusiness.url, options: [:], completionHandler: nil)
+                    break
+                default: break
+                }
+            }
+        }
+    }
+    
     // MARK: - Helper methods
     
     private func configureUI() {
@@ -43,12 +62,15 @@ class WaiterDetailActionTableViewCell: UITableViewCell {
                 switch uActionType {
                 case .phone:
                     self.actionTitleLabel.text = uWaiter.phone ?? ""
-//                    if let image = UIImage(named: phoneImageName) {
-//                        self.actionButton.setImage(image, for: .normal)
-//                    }
+                    if let image = UIImage(named: "Phone Button Icon") {
+                        self.actionButton.setImage(image, for: .normal)
+                    }
                     break
                 case .email:
                     self.actionTitleLabel.text = uWaiter.email ?? ""
+                    if let image = UIImage(named: "Email Button Icon") {
+                        self.actionButton.setImage(image, for: .normal)
+                    }
                     break
                 default: break // Type not supported
                 }

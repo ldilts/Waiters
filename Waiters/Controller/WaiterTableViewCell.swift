@@ -1,5 +1,5 @@
 //
-//  WaiterDetailNameTableViewCell.swift
+//  WaiterTableViewCell.swift
 //  Waiters
 //
 //  Created by Lucas Dilts on 2016-10-14.
@@ -8,14 +8,15 @@
 
 import UIKit
 
-class WaiterDetailNameTableViewCell: UITableViewCell {
+class WaiterTableViewCell: UITableViewCell {
     
+    @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
-//    @IBOutlet weak var detailLabel: UILabel!
+    @IBOutlet weak var detailLabel: UILabel!
     
     var waiter: Waiter! {
         didSet {
-            configureUI()
+            self.configureUI()
         }
     }
     
@@ -24,6 +25,14 @@ class WaiterDetailNameTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        self.profileImageView.image = nil
+        self.nameLabel.text = ""
+        self.detailLabel.text = ""
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -35,23 +44,16 @@ class WaiterDetailNameTableViewCell: UITableViewCell {
     // MARK: - Helper methods
     
     private func configureUI() {
-        if let uWaiter = self.waiter {
+        if let uWaiter = waiter {
+            
+            self.profileImageView.image = uWaiter.image
             self.nameLabel.text = uWaiter.name
             
-//            if let birthday = uWaiter.birthday {
-//                
-//                let formatter = DateFormatter()
-//                formatter.dateStyle = DateFormatter.Style.long
-//                
-//                let dateString = formatter.string(from: (birthday as Date))
-//                
-//                self.detailLabel.text = "Birthday: \(dateString)"
-//            } else {
-//                self.detailLabel.text = nil
-//            }
+            let shiftCount = uWaiter.shifts.count
+            let shiftText = shiftCount == 1 ? "Shift" : "Shifts"
+            
+            self.detailLabel.text = "\(shiftCount) \(shiftText)"
         }
-        
-        
     }
 
 }

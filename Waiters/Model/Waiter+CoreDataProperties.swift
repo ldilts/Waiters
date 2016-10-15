@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreData
+import UIKit
 
 extension Waiter {
 
@@ -20,6 +21,7 @@ extension Waiter {
     @NSManaged public var shifts: NSSet
     @NSManaged public var phone: String?
     @NSManaged public var email: String?
+    @NSManaged public var image: UIImage?
 
 }
 

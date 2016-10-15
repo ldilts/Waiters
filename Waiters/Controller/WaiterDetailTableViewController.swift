@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MessageUI
 
 /*
  0. Profile picture header
@@ -44,7 +45,7 @@ class WaiterDetailTableViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
-        self.title = self.waiter?.name ?? "Waiter"
+//        self.title = self.waiter?.name ?? "Waiter"
         
         self.tableView.estimatedRowHeight = 110.0
         self.tableView.rowHeight = UITableViewAutomaticDimension
@@ -54,8 +55,7 @@ class WaiterDetailTableViewController: UITableViewController {
         super.viewWillAppear(animated)
         
         if let uWaiter = self.waiter {
-            
-            self.sortedShifts = uWaiter.shifts.sorted( by: { ($0 as! Shift).startTime.compare(($1 as! Shift).startTime as Date) == .orderedAscending } ) as! [Shift]
+            self.sortShifts(forWaiter: uWaiter)
         }
         
         self.tableView.reloadData()
@@ -90,7 +90,9 @@ class WaiterDetailTableViewController: UITableViewController {
                 switch cellType {
                 case .header:
                     
-                    let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+                    let cell = tableView.dequeueReusableCell(withIdentifier: "waiterDetailHeaderCell",
+                                                             for: indexPath) as! WaiterDetailHeaderImageTableViewCell
+                    cell.waiter = uWaiter
                     return cell
                     
                 case .name:
@@ -133,25 +135,36 @@ class WaiterDetailTableViewController: UITableViewController {
         return cell
     }
 
-    /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         // Return false if you do not want the specified item to be editable.
-        return true
+        if indexPath.section == 1 {
+            return true
+        }
+        
+        return false
     }
-    */
 
-    /*
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
+//            tableView.deleteRows(at: [indexPath], with: .fade)
+            
+            let shift = sortedShifts[indexPath.row]
+            
+            coreDataStack.managedObjectContext.delete(shift)
+            coreDataStack.saveMainContext()
+            
+            if let uWaiter = self.waiter {
+                self.sortShifts(forWaiter: uWaiter)
+            }
+            
+            self.tableView.reloadData()
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }    
     }
-    */
 
     /*
     // Override to support rearranging the table view.
@@ -181,7 +194,7 @@ class WaiterDetailTableViewController: UITableViewController {
             }
         }
         
-        return UITableViewAutomaticDimension
+        return 86.0
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -190,6 +203,13 @@ class WaiterDetailTableViewController: UITableViewController {
         }
         
         return nil
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        // TODO: Finish this
+        
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
     // MARK: - Actions
@@ -205,10 +225,10 @@ class WaiterDetailTableViewController: UITableViewController {
         self.cellTypesForDisplay.removeAll(keepingCapacity: false)
         
         if let uWaiter = self.waiter {
-//            if let _ = uBusiness.imageURL {
-//                numberOfRows += 1
-//                self.cellTypesForDisplay.append(.header)
-//            }
+            if let _ = uWaiter.image {
+                numberOfRows += 1
+                self.cellTypesForDisplay.append(.header)
+            }
             
             numberOfRows += 1
             self.cellTypesForDisplay.append(.name)
@@ -227,6 +247,12 @@ class WaiterDetailTableViewController: UITableViewController {
         return numberOfRows
     }
 
+    private func sortShifts(forWaiter waiter: Waiter) {
+        self.sortedShifts = waiter.shifts.sorted( by: {
+            ($0 as! Shift).startTime.compare(($1 as! Shift).startTime as Date) == .orderedAscending
+        } ) as! [Shift]
+    }
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -252,4 +278,27 @@ class WaiterDetailTableViewController: UITableViewController {
         // This is used in the storyboard file for unwind segues.
     }
 
+}
+
+extension WaiterDetailTableViewController: MFMailComposeViewControllerDelegate {
+    func configuredMailComposeViewController() -> MFMailComposeViewController {
+        let mailComposeViewController = MFMailComposeViewController()
+        mailComposeViewController.mailComposeDelegate = self
+
+        mailComposeViewController.setToRecipients(["someone@somewhere.com"])
+
+        return mailComposeViewController
+    }
+
+    func showSendMailErrorAlert() {
+        let alert = UIAlertController(title: "Error Sending E-mail", message: "Your device was not able to send an e-mail.", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+
+        alert.addAction(okAction)
+        self.present(alert, animated: true, completion: nil)
+    }
+
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        controller.dismiss(animated: true, completion: nil)
+    }
 }

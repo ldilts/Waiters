@@ -81,10 +81,10 @@ class WaitersTableViewController: UITableViewController, UISearchBarDelegate {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "waiterCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "waiterCell", for: indexPath) as! WaiterTableViewCell
 
         // Configure the cell...
-        cell.textLabel?.text = fetchedResultsController.object(at: indexPath).name
+        cell.waiter = fetchedResultsController.object(at: indexPath)
 
         return cell
     }
@@ -127,6 +127,10 @@ class WaitersTableViewController: UITableViewController, UISearchBarDelegate {
     */
     
     // MARK: - Table view delegate
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 86.0
+    }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.selectedIndexPath = indexPath
@@ -174,6 +178,7 @@ class WaitersTableViewController: UITableViewController, UISearchBarDelegate {
                 if let destinationViewController = segue.destination as? AddWaiterTableViewController {
                     
                     destinationViewController.coreDataStack = self.coreDataStack
+                    destinationViewController.addWaiterDelegate = self
                 }
                 
             default: break
@@ -185,6 +190,12 @@ class WaitersTableViewController: UITableViewController, UISearchBarDelegate {
         // This is used in the storyboard file for unwind segues.  
     }
 
+}
+
+extension WaitersTableViewController: AddWaiterDelegate {
+    func updateUI() {
+        reloadData()
+    }
 }
 
 // MARK: - Search results updating

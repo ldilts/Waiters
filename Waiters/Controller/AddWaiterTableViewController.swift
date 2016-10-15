@@ -9,9 +9,18 @@
 import UIKit
 import CoreData
 
+protocol AddWaiterDelegate: class {
+    func updateUI()
+}
+
 class AddWaiterTableViewController: UITableViewController, UITextFieldDelegate {
     
     var coreDataStack: CoreDataStack!
+    
+    weak var addWaiterDelegate: AddWaiterDelegate?
+    
+    @IBOutlet weak var profileImageView: UIImageView!
+    @IBOutlet weak var profileImageLabel: UILabel!
     
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var phoneTextField: UITextField!
@@ -28,6 +37,8 @@ class AddWaiterTableViewController: UITableViewController, UITextFieldDelegate {
     
     private var selectedBirthday: Date!
     
+    private let imagePicker = UIImagePickerController()
+    
     // MARK: - Life cycle
 
     override func viewDidLoad() {
@@ -39,6 +50,8 @@ class AddWaiterTableViewController: UITableViewController, UITextFieldDelegate {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         self.birthdayDatePicker.isHidden = true
+        
+        self.imagePicker.delegate = self
     }
 
     override func didReceiveMemoryWarning() {
@@ -47,47 +60,20 @@ class AddWaiterTableViewController: UITableViewController, UITextFieldDelegate {
     }
 
     // MARK: - Table view data source
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
     
     // MARK: - Table view delegate
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
-        if indexPath.section == 0 && indexPath.row == 1 {
+        if indexPath.section == 0 {
+            if let _ = self.profileImageView.image {
+                return (UIScreen.main.bounds.width * 9.0) / 16.0
+            }
+            
+            return 86.0
+        }
+        
+        if indexPath.section == 1 && indexPath.row == 1 {
             // Birthday row height
             return self.birthdayCellHeight
         }
@@ -99,6 +85,13 @@ class AddWaiterTableViewController: UITableViewController, UITextFieldDelegate {
         
         switch indexPath.section {
         case 0:
+            imagePicker.allowsEditing = false
+            imagePicker.sourceType = .photoLibrary
+            
+            present(imagePicker, animated: true, completion: nil)
+            
+            break
+        case 1:
             
             switch indexPath.row {
             case 0:
@@ -112,7 +105,7 @@ class AddWaiterTableViewController: UITableViewController, UITextFieldDelegate {
             
             break
             
-        case 1:
+        case 2:
             
             switch indexPath.row {
             case 0:
@@ -193,15 +186,37 @@ class AddWaiterTableViewController: UITableViewController, UITextFieldDelegate {
             return
         }
         
-        guard let waiterEntity = NSEntityDescription.entity(forEntityName: "Waiter", in: coreDataStack.managedObjectContext) else {
-            fatalError("Could not find entity descriptions")
+        DispatchQueue.global(qos: .default).async {
+            
+            guard let waiterEntity = NSEntityDescription.entity(forEntityName: "Waiter", in: self.coreDataStack.managedObjectContext) else {
+                fatalError("Could not find entity descriptions")
+            }
+            
+            let waiter = Waiter(entity: waiterEntity, insertInto: self.coreDataStack.managedObjectContext)
+            waiter.name = name
+            waiter.birthday = birthday as NSDate
+            
+            if let phone = self.phoneTextField.text {
+                if phone != "" {
+                    waiter.phone = phone
+                }
+            }
+            
+            if let email = self.emailTextField.text {
+                if email != "" {
+                    waiter.email = email
+                }
+            }
+            
+            waiter.image = self.profileImageView.image
+            
+            self.coreDataStack.saveMainContext()
+            
+            
+            DispatchQueue.main.async {
+                self.addWaiterDelegate?.updateUI()
+            }
         }
-        
-        let waiter = Waiter(entity: waiterEntity, insertInto: coreDataStack.managedObjectContext)
-        waiter.name = name
-        waiter.birthday = birthday as NSDate
-        
-        coreDataStack.saveMainContext()
         
         self.performSegue(withIdentifier: "unwindToWaitersTableViewController", sender: self)
     }
@@ -242,4 +257,30 @@ class AddWaiterTableViewController: UITableViewController, UITextFieldDelegate {
     }
     */
 
+}
+
+extension AddWaiterTableViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            profileImageView.image = pickedImage
+            self.profileImageLabel.isHidden = true
+            
+            self.profileImageView.frame = CGRect(
+                x: 0.0,
+                y: 0.0,
+                width: UIScreen.main.bounds.width,
+                height: (UIScreen.main.bounds.width * 9.0) / 16.0)
+            
+            self.tableView.beginUpdates()
+            self.tableView.endUpdates()
+        }
+        
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
+    }
+    
 }
