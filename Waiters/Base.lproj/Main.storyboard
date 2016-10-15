@@ -184,6 +184,7 @@
                     <navigationItem key="navigationItem" title="Working Now" id="q6K-CN-BfL"/>
                     <connections>
                         <segue destination="9hD-9x-NLG" kind="presentation" identifier="welcomeSegue" animates="NO" id="7w8-83-EaH"/>
+                        <segue destination="Q7N-q8-ixn" kind="show" identifier="waiterDetailSegue" id="VyF-Zc-FZJ"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="m1e-kX-wjL" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -250,7 +251,7 @@
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="First and Last Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Zvi-OO-lI0">
                                                     <nil key="textColor"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
                                                     <connections>
                                                         <outlet property="delegate" destination="BJk-YI-zxO" id="TVl-qK-Tcl"/>
                                                     </connections>
@@ -848,10 +849,10 @@
             </objects>
             <point key="canvasLocation" x="2906" y="198"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--Tab Bar View Controller-->
         <scene sceneID="3sx-yg-Tny">
             <objects>
-                <tabBarController id="tr3-6y-zJK" sceneMemberID="viewController">
+                <tabBarController id="tr3-6y-zJK" customClass="TabBarViewController" customModule="Waiters" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" id="b7E-Yb-J3t">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -870,7 +871,7 @@
         <scene sceneID="gFm-xi-BhZ">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Jt5-eM-1Qz" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Waiters" id="EfK-yF-Q6N"/>
+                    <tabBarItem key="tabBarItem" title="Waiters" image="Waiters Tab Icon" id="EfK-yF-Q6N"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="7aR-no-EPg">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -889,7 +890,7 @@
         <scene sceneID="voV-4l-sf6">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="luY-aP-RvB" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Now" id="5uW-NY-Rsf"/>
+                    <tabBarItem key="tabBarItem" title="Now" image="Now Tab Icon" id="5uW-NY-Rsf"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Oa7-ai-8Dd">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -1097,9 +1098,14 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Now Tab Icon" width="22" height="22"/>
         <image name="Person Icon" width="48" height="48"/>
         <image name="Phone Icon" width="48" height="48"/>
         <image name="Shift Icon" width="48" height="48"/>
+        <image name="Waiters Tab Icon" width="22" height="22"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="VyF-Zc-FZJ"/>
+    </inferredMetricsTieBreakers>
     <color key="tintColor" red="1" green="0.1764705882352941" blue="0.33333333333333331" alpha="1" colorSpace="calibratedRGB"/>
 </document>

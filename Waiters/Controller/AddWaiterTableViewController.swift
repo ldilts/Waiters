@@ -186,6 +186,24 @@ class AddWaiterTableViewController: UITableViewController, UITextFieldDelegate {
             return
         }
         
+//        if let phone = self.phoneTextField.text {
+//            if phone != "" {
+//                
+//                guard self.validate(phone: phone) else {
+//                    let alert = UIAlertController(
+//                        title: "Invalid Phone Number",
+//                        message: "Please enter a valid phone number.",
+//                        preferredStyle: .alert)
+//                    
+//                    let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+//                    alert.addAction(okAction)
+//                    
+//                    self.present(alert, animated: true, completion: nil)
+//                    return
+//                }
+//            }
+//        }
+        
         DispatchQueue.global(qos: .default).async {
             
             guard let waiterEntity = NSEntityDescription.entity(forEntityName: "Waiter", in: self.coreDataStack.managedObjectContext) else {
@@ -246,6 +264,13 @@ class AddWaiterTableViewController: UITableViewController, UITextFieldDelegate {
         
         self.tableView.endUpdates()
     }
+    
+//    private func validate(phone: String) -> Bool {
+//        let PHONE_REGEX = "^(\\d{3}) \\d{3}-\\d{4}$"
+//        let phoneTest = NSPredicate(format: "SELF MATCHES %@", PHONE_REGEX)
+//        let result =  phoneTest.evaluate(with: phone)
+//        return result
+//    }
 
     /*
     // MARK: - Navigation

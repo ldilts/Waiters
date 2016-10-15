@@ -121,6 +121,11 @@ class WaitersWorkingNowTableViewController: UITableViewController {
         return 146.0
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.selectedIndexPath = indexPath
+        self.performSegue(withIdentifier: "waiterDetailSegue", sender: self)
+    }
+    
     // MARK: - Helper methods
     
     private func reloadData() {
@@ -136,15 +141,31 @@ class WaitersWorkingNowTableViewController: UITableViewController {
         tableView.reloadData()
     }
 
-    /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        if let identifier = segue.identifier {
+            switch identifier {
+            case "waiterDetailSegue":
+                guard let uSelectedIndexPath = self.selectedIndexPath else {
+                    return
+                }
+                
+                guard let waiter = fetchedResultsController.object(at: uSelectedIndexPath).owner else {
+                    return
+                }
+                
+                if let destinationViewController = segue.destination as? WaiterDetailTableViewController {
+                    
+                    destinationViewController.coreDataStack = self.coreDataStack
+                    destinationViewController.waiter = waiter
+                }
+                
+            default: break
+            }
+        }
     }
-    */
 
 }
 

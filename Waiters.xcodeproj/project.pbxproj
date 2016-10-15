@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		862474251DB2768200460BF2 /* WaiterShiftTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 862474241DB2768200460BF2 /* WaiterShiftTableViewCell.swift */; };
 		862474271DB285B900460BF2 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 862474261DB285B900460BF2 /* WelcomeViewController.swift */; };
+		862474291DB28F4600460BF2 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 862474281DB28F4600460BF2 /* TabBarViewController.swift */; };
 		86443D171DB1949500EB6260 /* WaiterDetailHeaderImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86443D161DB1949500EB6260 /* WaiterDetailHeaderImageTableViewCell.swift */; };
 		86443D191DB195E200EB6260 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86443D181DB195E200EB6260 /* UIView+Extension.swift */; };
 		86443D1D1DB1ACFC00EB6260 /* WaiterTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86443D1C1DB1ACFC00EB6260 /* WaiterTableViewCell.swift */; };
@@ -40,6 +41,7 @@
 		83EE8F25BBCD5391C88F1AB4 /* Pods_Waiters.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Waiters.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		862474241DB2768200460BF2 /* WaiterShiftTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WaiterShiftTableViewCell.swift; path = Controller/WaiterShiftTableViewCell.swift; sourceTree = "<group>"; };
 		862474261DB285B900460BF2 /* WelcomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WelcomeViewController.swift; path = Controller/WelcomeViewController.swift; sourceTree = "<group>"; };
+		862474281DB28F4600460BF2 /* TabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TabBarViewController.swift; path = Controller/TabBarViewController.swift; sourceTree = "<group>"; };
 		86443D161DB1949500EB6260 /* WaiterDetailHeaderImageTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WaiterDetailHeaderImageTableViewCell.swift; path = Controller/WaiterDetailHeaderImageTableViewCell.swift; sourceTree = "<group>"; };
 		86443D181DB195E200EB6260 /* UIView+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 		86443D1C1DB1ACFC00EB6260 /* WaiterTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WaiterTableViewCell.swift; path = Controller/WaiterTableViewCell.swift; sourceTree = "<group>"; };
@@ -162,6 +164,7 @@
 				868B74F91DB0530C00A24EED /* AddWaiterTableViewController.swift */,
 				86CC65701DB10A83003D7D69 /* AddShiftTableViewController.swift */,
 				862474261DB285B900460BF2 /* WelcomeViewController.swift */,
+				862474281DB28F4600460BF2 /* TabBarViewController.swift */,
 				86CC656B1DB103AB003D7D69 /* Cells */,
 				86443D1E1DB25A8600EB6260 /* Custom Views */,
 			);
@@ -339,6 +342,7 @@
 			files = (
 				86CC65711DB10A83003D7D69 /* AddShiftTableViewController.swift in Sources */,
 				86B5EB331DB034E80014D191 /* WaitersTableViewController.swift in Sources */,
+				862474291DB28F4600460BF2 /* TabBarViewController.swift in Sources */,
 				86B5EB3B1DB040190014D191 /* Waiter.swift in Sources */,
 				86443D191DB195E200EB6260 /* UIView+Extension.swift in Sources */,
 				86B5EB3E1DB040190014D191 /* Shift+CoreDataProperties.swift in Sources */,

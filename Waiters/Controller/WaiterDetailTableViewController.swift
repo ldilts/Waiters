@@ -108,6 +108,7 @@ class WaiterDetailTableViewController: UITableViewController {
                                                              for: indexPath) as! WaiterDetailActionTableViewCell
                     cell.waiter = uWaiter
                     cell.actionType = cellType
+                    cell.actionCellDelegate = self
                     return cell
                     
                 }
@@ -201,7 +202,21 @@ class WaiterDetailTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        // TODO: Finish this
+        if let uWaiter = self.waiter {
+            if indexPath.section == 0 {
+                let cellType = self.cellTypesForDisplay[indexPath.row]
+                
+                switch cellType {
+                case .phone:
+                    self.makeCall(toWaiter: uWaiter)
+                    break
+                case .email:
+                    self.sendEmail(toWaiter: uWaiter)
+                    break
+                default: break
+                }
+            }
+        }
         
         tableView.deselectRow(at: indexPath, animated: true)
     }
@@ -274,12 +289,48 @@ class WaiterDetailTableViewController: UITableViewController {
 
 }
 
+extension WaiterDetailTableViewController: ActionCellDelegate {
+    
+    func sendEmail(toWaiter waiter: Waiter) {
+        let mailComposeViewController = configuredMailComposeViewController(withWaiter: waiter)
+        
+        if MFMailComposeViewController.canSendMail() {
+            self.present(mailComposeViewController, animated: true, completion: nil)
+        } else {
+            self.showSendMailErrorAlert()
+        }
+    }
+    
+    func makeCall(toWaiter waiter: Waiter) {
+        if let phone = waiter.phone {
+            
+            // remove all non-numeric charaters
+            let trimmedPhone = phone.components(separatedBy: NSCharacterSet.decimalDigits.inverted).joined(separator: "")
+            
+            let phoneURLString = "tel://\(trimmedPhone)"
+            if let phoneURL = URL(string: phoneURLString) {
+                UIApplication.shared.open(phoneURL, options: [:], completionHandler: nil)
+            } else {
+                let alert = UIAlertController(title: "Unable to Make Call", message: "This phone numer is invalid.", preferredStyle: .alert)
+                let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+                
+                alert.addAction(okAction)
+                self.present(alert, animated: true, completion: nil)
+            }
+        }
+    }
+    
+}
+
 extension WaiterDetailTableViewController: MFMailComposeViewControllerDelegate {
-    func configuredMailComposeViewController() -> MFMailComposeViewController {
+   
+    func configuredMailComposeViewController(withWaiter waiter: Waiter) -> MFMailComposeViewController {
         let mailComposeViewController = MFMailComposeViewController()
         mailComposeViewController.mailComposeDelegate = self
 
-        mailComposeViewController.setToRecipients(["someone@somewhere.com"])
+        if let email = waiter.email {
+            mailComposeViewController.setToRecipients([email])
+        }
 
         return mailComposeViewController
     }

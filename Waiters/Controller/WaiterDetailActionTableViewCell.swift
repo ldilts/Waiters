@@ -8,6 +8,11 @@
 
 import UIKit
 
+protocol ActionCellDelegate: class {
+    func sendEmail(toWaiter waiter: Waiter)
+    func makeCall(toWaiter waiter: Waiter)
+}
+
 class WaiterDetailActionTableViewCell: UITableViewCell {
     
     @IBOutlet weak var actionTitleLabel: UILabel!
@@ -20,6 +25,8 @@ class WaiterDetailActionTableViewCell: UITableViewCell {
             self.configureUI()
         }
     }
+    
+    weak var actionCellDelegate: ActionCellDelegate?
     
     // MARK: - Life cycle
 
@@ -41,11 +48,10 @@ class WaiterDetailActionTableViewCell: UITableViewCell {
             if let cellType = self.actionType {
                 switch cellType {
                 case .phone:
-                    let phone = "tel://\(uWaiter.phone!)"
-                    UIApplication.shared.open(URL(string: phone)!, options: [:], completionHandler: nil)
+                    self.actionCellDelegate?.makeCall(toWaiter: uWaiter)
                     break
                 case .email:
-//                    UIApplication.shared.open(uBusiness.url, options: [:], completionHandler: nil)
+                    self.actionCellDelegate?.sendEmail(toWaiter: uWaiter)
                     break
                 default: break
                 }
