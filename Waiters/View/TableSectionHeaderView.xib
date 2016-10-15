@@ -12,9 +12,6 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="40"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GKe-dy-tah">
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="A" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="79T-MY-4kY">
                     <constraints>
                         <constraint firstAttribute="height" relation="greaterThanOrEqual" id="gG2-RZ-gP9"/>
@@ -25,14 +22,9 @@
                     <nil key="highlightedColor"/>
                 </label>
             </subviews>
-            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="GKe-dy-tah" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="4GC-5E-TJ3"/>
                 <constraint firstItem="79T-MY-4kY" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="ROS-de-ge7"/>
-                <constraint firstAttribute="trailing" secondItem="GKe-dy-tah" secondAttribute="trailing" id="Rfi-c2-9Dw"/>
                 <constraint firstItem="79T-MY-4kY" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="YKW-jR-gpb"/>
-                <constraint firstAttribute="bottom" secondItem="GKe-dy-tah" secondAttribute="bottom" id="aJX-7m-jmh"/>
-                <constraint firstItem="GKe-dy-tah" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="jaR-P9-dwf"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>

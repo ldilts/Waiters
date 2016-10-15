@@ -153,6 +153,8 @@ class WaitersTableViewController: UITableViewController, UISearchBarDelegate {
         let header = cell as! TableSectionHeaderView
         header.titleLabel.text = title
         
+        cell?.contentView.backgroundColor = UIColor.white
+        
         return cell
     }
     

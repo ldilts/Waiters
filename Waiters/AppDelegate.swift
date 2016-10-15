@@ -30,10 +30,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             fatalError("Error fetching data: \(error)")
         }
         
-        if let nav = window?.rootViewController as? UINavigationController {
-            if let waitersTableViewController = nav.topViewController {
-                if waitersTableViewController.responds(to: #selector(setter: AppDelegate.coreDataStack)) {
-                    waitersTableViewController.perform(#selector(setter: AppDelegate.coreDataStack), with: coreDataStack)
+//        if let nav = window?.rootViewController as? UINavigationController {
+//            if let waitersTableViewController = nav.topViewController {
+//                if waitersTableViewController.responds(to: #selector(setter: AppDelegate.coreDataStack)) {
+//                    waitersTableViewController.perform(#selector(setter: AppDelegate.coreDataStack), with: coreDataStack)
+//                }
+//            }
+//        }
+        
+        if let tab = window?.rootViewController as? UITabBarController {
+            for child in tab.viewControllers ?? [] {
+                if let child = child as? UINavigationController, let top = child.topViewController {
+                    if top.responds(to: #selector(setter: AppDelegate.coreDataStack)) {
+                        top.perform(#selector(setter: AppDelegate.coreDataStack), with: coreDataStack)
+                    }
                 }
             }
         }
