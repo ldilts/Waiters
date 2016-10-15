@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import DZNEmptyDataSet
 
 class WaitersWorkingNowTableViewController: UITableViewController {
     
@@ -34,6 +35,18 @@ class WaitersWorkingNowTableViewController: UITableViewController {
             managedObjectContext: coreDataStack.managedObjectContext,
             sectionNameKeyPath: nil,
             cacheName: nil)
+        
+        // Setup empty state
+        
+        self.tableView.emptyDataSetSource = self
+        self.tableView.emptyDataSetDelegate = self
+        
+        // A little trick for removing the cell separators
+        self.tableView.tableFooterView = UIView()
+        
+        if !UserDefaults.standard.bool(forKey: "OnboardComplete") {
+            self.performSegue(withIdentifier: "welcomeSegue", sender: self)
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -133,4 +146,35 @@ class WaitersWorkingNowTableViewController: UITableViewController {
     }
     */
 
+}
+
+extension WaitersWorkingNowTableViewController: DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
+    
+    func title(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
+        let text: String = "Nobody is Working"
+        
+        let attributes = [
+            NSFontAttributeName: UIFont.boldSystemFont(ofSize: 18.0),
+            NSForegroundColorAttributeName: UIColor.darkGray]
+        
+        
+        return NSAttributedString(string: text, attributes: attributes)
+    }
+    
+    func description(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
+
+        let text: String = "There are currently no waiters sheduled for this current shift."
+        
+        let paragraph = NSMutableParagraphStyle()
+        paragraph.lineBreakMode = .byWordWrapping
+        paragraph.alignment = .center
+        
+        let attributes = [
+            NSFontAttributeName: UIFont.boldSystemFont(ofSize: 14.0),
+            NSForegroundColorAttributeName: UIColor.lightGray,
+            NSParagraphStyleAttributeName: paragraph]
+        
+        
+        return NSAttributedString(string: text, attributes: attributes)
+    }
 }

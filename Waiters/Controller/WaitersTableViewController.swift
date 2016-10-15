@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import DZNEmptyDataSet
 
 class WaitersTableViewController: UITableViewController, UISearchBarDelegate {
     
@@ -56,6 +57,14 @@ class WaitersTableViewController: UITableViewController, UISearchBarDelegate {
         self.resultSearchController.searchBar.tintColor = UIColor(red: (255.0/255.0), green: (45.0/255.0), blue: (85.0/255.0), alpha: 1.0)
         
         self.tableView.tableHeaderView = self.resultSearchController.searchBar
+        
+        // Setup empty state
+        
+        self.tableView.emptyDataSetSource = self
+        self.tableView.emptyDataSetDelegate = self
+        
+        // A little trick for removing the cell separators
+        self.tableView.tableFooterView = UIView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -253,3 +262,45 @@ extension WaitersTableViewController: UISearchResultsUpdating {
     }
 }
 
+extension WaitersTableViewController: DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
+    
+    func title(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
+        var text: String = "No Waiters Registered"
+        
+        if self.resultSearchController.isActive {
+            text = "No Results Found"
+        } else {
+            text = "No Waiters Registered"
+        }
+        
+        let attributes = [
+            NSFontAttributeName: UIFont.boldSystemFont(ofSize: 18.0),
+            NSForegroundColorAttributeName: UIColor.darkGray]
+        
+        
+        return NSAttributedString(string: text, attributes: attributes)
+    }
+    
+    func description(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
+        
+        var text: String = ""
+        
+        if self.resultSearchController.isActive {
+            text = "No waiters were found for this search query."
+        } else {
+            text = "Tap the + button to register a new waiter."
+        }
+        
+        let paragraph = NSMutableParagraphStyle()
+        paragraph.lineBreakMode = .byWordWrapping
+        paragraph.alignment = .center
+        
+        let attributes = [
+            NSFontAttributeName: UIFont.boldSystemFont(ofSize: 14.0),
+            NSForegroundColorAttributeName: UIColor.lightGray,
+            NSParagraphStyleAttributeName: paragraph]
+        
+        
+        return NSAttributedString(string: text, attributes: attributes)
+    }
+}

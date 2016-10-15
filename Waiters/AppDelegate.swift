@@ -18,24 +18,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
-        let fetchRequest: NSFetchRequest<Waiter> = Waiter.fetchRequest()
-        
-        do {
-            let results = try coreDataStack.managedObjectContext.fetch(fetchRequest)
-            
-            if results.count == 0 {
-                addTestData()
-            }
-        } catch {
-            fatalError("Error fetching data: \(error)")
-        }
-        
-//        if let nav = window?.rootViewController as? UINavigationController {
-//            if let waitersTableViewController = nav.topViewController {
-//                if waitersTableViewController.responds(to: #selector(setter: AppDelegate.coreDataStack)) {
-//                    waitersTableViewController.perform(#selector(setter: AppDelegate.coreDataStack), with: coreDataStack)
-//                }
+//        let fetchRequest: NSFetchRequest<Waiter> = Waiter.fetchRequest()
+//        
+//        do {
+//            let results = try coreDataStack.managedObjectContext.fetch(fetchRequest)
+//            
+//            if results.count == 0 {
+//                addTestData()
 //            }
+//        } catch {
+//            fatalError("Error fetching data: \(error)")
 //        }
         
         if let tab = window?.rootViewController as? UITabBarController {
@@ -75,29 +67,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.coreDataStack.saveMainContext()
     }
 
-    func addTestData() {
-        guard let waiterEntity = NSEntityDescription.entity(forEntityName: "Waiter", in: coreDataStack.managedObjectContext),
-            let shiftEntity = NSEntityDescription.entity(forEntityName: "Shift", in: coreDataStack.managedObjectContext) else {
-            fatalError("Could not find entity descriptions")
-        }
-        
-//        for i in 1...10 {
-//            let shift = Shift(entity: shiftEntity, insertInto: coreDataStack.managedObjectContext)
-//            
-//            shift.startTime = Date()
-//            shift.endTime = Date()
+//    func addTestData() {
+//        guard let waiterEntity = NSEntityDescription.entity(forEntityName: "Waiter", in: coreDataStack.managedObjectContext) else {
+//            fatalError("Could not find entity descriptions")
 //        }
-        
-        let aaron = Waiter(entity: waiterEntity, insertInto: coreDataStack.managedObjectContext)
-        aaron.name = "Aaron"
-        
-        let beatrice = Waiter(entity: waiterEntity, insertInto: coreDataStack.managedObjectContext)
-        beatrice.name = "Beatrice"
-        
-        let charles = Waiter(entity: waiterEntity, insertInto: coreDataStack.managedObjectContext)
-        charles.name = "Charles"
-        
-        coreDataStack.saveMainContext()
-    }
+//        
+//        let aaron = Waiter(entity: waiterEntity, insertInto: coreDataStack.managedObjectContext)
+//        aaron.name = "Aaron"
+//        
+//        let beatrice = Waiter(entity: waiterEntity, insertInto: coreDataStack.managedObjectContext)
+//        beatrice.name = "Beatrice"
+//        
+//        let charles = Waiter(entity: waiterEntity, insertInto: coreDataStack.managedObjectContext)
+//        charles.name = "Charles"
+//        
+//        coreDataStack.saveMainContext()
+//    }
 }
 
